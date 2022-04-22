@@ -6,6 +6,7 @@ const axios = require('axios');
 const mongoose = require('mongoose');
 const Movie = require('./model/movie');
 const jwt = require('jsonwebtoken');
+const User = require('./model/user');
 
 
 const app = express();

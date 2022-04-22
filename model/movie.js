@@ -10,15 +10,18 @@ const movieSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    rating: {
-        type: Number,
-        default: 0
-    },
-    voting_count: {
-        type: Number,
-        default: 0
-    }
+    ratings: [{
+        by: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        },
+        rating: {
+            type: Number,
+            min: 1,
+            max: 10
+        }
+   }]
 });
 
-const Movie = mongoose.model('movie', movieSchema);
+const Movie = mongoose.model('Movie', movieSchema);
 module.exports = Movie;
