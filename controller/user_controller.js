@@ -1,13 +1,9 @@
-const express = require('express');
-const User = require('../model/user');
-const router = express.Router();
-const bcrypt = require('bcrypt');
-
 // import the Validation Controller
-const validationController = require('../controller/validation_controller');
-
-
-router.post('/register', async (req, res)=>{
+const validationController = require('./validation_controller');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const User = require('../model/user');
+module.exports.register = async (req, res)=>{
     // Validate data before pushing it to the database
     const {error} = await validationController.registerValidation(req.body);
     if(error){return res.status(400).json({Error: error.details[0].message, message: "Bad Request", status: 400});}
@@ -30,9 +26,8 @@ router.post('/register', async (req, res)=>{
     }catch(err){
         return res.status(400).json({message: "Error in creating user try again"});;
     } 
-});
-
-router.post('/login', async (req, res)=>{
+}
+module.exports.login = async (req, res)=>{
     // Validate data before pushing it to the database
     const {error} = await validationController.loginValidation(req.body);
     if(error){return res.status(400).json({Error: error.details[0].message, message: "Bad Request", status: 400});}
@@ -41,16 +36,14 @@ router.post('/login', async (req, res)=>{
         const user = await User.findOne({email: req.body.email});
         if(!user){return res.status(400).json({message: "Invalid email/Password"});}
         // Compare PASSWORDS 
-        const validPass = await bcrypt.compare(req.body.password, user.password);
-        if(!validPass){return res.status(400).json({message: "Invalid email/Password"});}
+        const validPassword = await bcrypt.compare(req.body.password, user.password);
+        if(!validPassword){return res.status(400).json({message: "Invalid email/Password"});}
 
         // create jwt and send it to the user
-
-        return res.status(200).json({message: "Login Successful", user: user});
+        const accessToken = jwt.sign({_id: user._id}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15min' });
+        return res.status(200).json({message: "Login Successful", accessToken: accessToken, name: user.name});
         
     }catch(err){
         return res.status(400).json({message: "Error in logging in user try again"});;
     }
-});
-
-module.exports = router;
+}

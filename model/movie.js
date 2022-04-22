@@ -2,14 +2,6 @@ const mongoose = require('mongoose');
 
 // Create user model
 const movieSchema = new mongoose.Schema({
-    adult: {
-        type: Boolean,
-        required: true
-    }, 
-    overview: {
-        type: String,
-        required: true
-    },
     title: {
         type: String,
         required: true
