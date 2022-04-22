@@ -15,12 +15,10 @@ const movieSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User'
         },
-        rating: {
-            type: Number,
-            min: 1,
-            max: 10
+        value: {
+            type: Number
         }
-   }]
+    }]
 });
 
 const Movie = mongoose.model('Movie', movieSchema);

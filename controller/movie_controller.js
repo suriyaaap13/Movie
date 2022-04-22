@@ -8,24 +8,25 @@ module.exports.movieList = async (req, res)=>{
     });
 }
 module.exports.rateMovie = async (req, res)=>{
-    console.log(req.user);
-    const movies = await Movie.findById(req.params.id);
-    console.log(movies);
-    const arr = movies.ratings;
-    const has = arr.includes(req.user);
-    console.log(has);
-    const filter = { _id: req.params.id };
-    const update = { $push: {
-        ratings: {
-            by: req.user,
-            rating: req.body.rating
-       }
-    } };
-    console.log(filter);
-    console.log(update);
-    await Movie.updateOne(filter, update);
-    console.log(movies);
 
+    const movie = await Movie.findById(req.params.id)
+    const user = await User.findById(req.user._id);
+    const ratingsArray = movie.ratings;
+    ratingsArray.forEach(async (element) => {
+        console.log(user._id.valueOf()===element.by.valueOf());
+        if(user._id.valueOf()===element.by.valueOf()){
+            console.log("Hello ");
+            const docs = await Movie.findByIdAndUpdate(req.params.id, {$pull: {ratings: element._id}});
+            console.log(docs);
+        }
+    });
+    
+    const newValue = {
+        by: user,
+        value: req.body.rating
+    }
+    await movie.ratings.push(newValue);
+    await movie.save();
     return res.status(200).json({
         message: "Rating submitted successfully",
         // movie: newMovie

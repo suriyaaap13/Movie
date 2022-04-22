@@ -1,13 +1,12 @@
+// requiring library
 require('dotenv').config();
 const express = require('express');
 const db = require('./config/mongoose');
 const bodyParser = require('body-parser');
 const axios = require('axios');
-const mongoose = require('mongoose');
-const Movie = require('./model/movie');
-const jwt = require('jsonwebtoken');
 const User = require('./model/user');
-
+const Movie = require('./model/movie');
+const API = require('./model/fetchDone');
 
 const app = express();
 
@@ -19,31 +18,47 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
-//////////////////// Make a request for a user with a given ID///////////
-// const api = [
-//   `https://api.themoviedb.org/4/list/10?page=1&api_key=${process.env.API_KEY}`,
-//   `https://api.themoviedb.org/4/list/10?page=2&api_key=${process.env.API_KEY}`,
-//   `https://api.themoviedb.org/4/list/10?page=3&api_key=${process.env.API_KEY}`
-// ]
+async function APIDRAMA() {
+    const dummy = await User.find({});
+    console.log(dummy);
+    const docs = await API.find({});
+    console.log(docs);
+    if(!docs[0]){
+        //////////////////// Make a request for a user with a given ID///////////
+        const api = [
+            `https://api.themoviedb.org/4/list/10?page=1&api_key=${process.env.API_KEY}`,
+            `https://api.themoviedb.org/4/list/10?page=2&api_key=${process.env.API_KEY}`,
+            `https://api.themoviedb.org/4/list/10?page=3&api_key=${process.env.API_KEY}`
+        ]
+        api.forEach((link)=>{
+        axios.get(link)
+            .then( function (response) {
+             response.data.results.forEach(async (element, index)=>{
+                try{
+                await Movie.create(element);
+                console.log("Data Fetched Successfully ", index);
+                }catch(err){
+                console.log('Error ', err);
+                }
+            });
+            })
+            .catch(function (error) {
+            // handle error
+            console.log(error);
+            });
+        });
+        const fetched = await API.create({
+            title: "APIFetched",
+            done: false
+        });
+    }
+}
+
+APIDRAMA();
 
 
-// api.forEach((link)=>{
-// axios.get(link)
-//   .then(async function (response) {
-//     await response.data.results.forEach(async (element, index)=>{
-//       try{
-//         await Movie.create(element);
-//         console.log("Data Fetched Successfully ", index);
-//       }catch(err){
-//         console.log('Error ', err);
-//       }
-//     });
-//   })
-//   .catch(function (error) {
-//     // handle error
-//     console.log(error);
-//   });
-// });
+
+
 
 /////////////////////// Route Middleware ///////////////////////
 app.use('/', require('./routes'));
