@@ -3,25 +3,42 @@ const express = require('express');
 const db = require('./config/mongoose');
 const bodyParser = require('body-parser');
 const axios = require('axios');
+const mongoose = require('mongoose');
+const Movie = require('./model/movie');
 
 
 const app = express();
 
-// Make a request for a user with a given ID
-axios.get(`https://api.themoviedb.org/4/list/10?page=1&api_key=${process.env.API_KEY}`)
-  .then(function (response) {
+//////////////////// Make a request for a user with a given ID///////////
+const api = [
+  `https://api.themoviedb.org/4/list/10?page=1&api_key=${process.env.API_KEY}`,
+  `https://api.themoviedb.org/4/list/10?page=2&api_key=${process.env.API_KEY}`,
+  `https://api.themoviedb.org/4/list/10?page=3&api_key=${process.env.API_KEY}`
+]
+
+
+
+ axios.get(`https://api.themoviedb.org/4/list/10?page=1&api_key=${process.env.API_KEY}`)
+  .then(async function (response) {
     // handle success
     // console.log(response.data.results);
-    
+    if(Movie.countDocuments({})){
+      response.data.results.forEach(async (element, index)=>{
+        try{
+          await Movie.create(element);
+          console.log("Data Fetched Successfully ", index);
+        }catch(err){
+          console.log('Error ', err);
+        }
+      });
+    }
+     
   })
   .catch(function (error) {
     // handle error
     console.log(error);
-  })
-  .then(function () {
-    // always executed
-    
   });
+
 
 
 // Import Route

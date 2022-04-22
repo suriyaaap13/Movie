@@ -1,4 +1,3 @@
-const { boolean, string } = require('joi');
 const mongoose = require('mongoose');
 
 // Create user model
@@ -15,11 +14,18 @@ const movieSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    rating: {
-        type: String
+    release_date: {
+        type: String,
+        required: true
     },
-    
-
+    rating: {
+        type: Number,
+        default: 0
+    },
+    voting_count: {
+        type: Number,
+        default: 0
+    }
 },{
     timestamps: true
 });
