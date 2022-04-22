@@ -26,8 +26,8 @@ app.use(bodyParser.json());
 // ]
 
 
-// api.forEach(async (link)=>{
-//   await axios.get(link)
+// api.forEach((link)=>{
+// axios.get(link)
 //   .then(async function (response) {
 //     await response.data.results.forEach(async (element, index)=>{
 //       try{
