@@ -12,9 +12,9 @@ An API that allows its users to retrive movie list, rate a movie and view all mo
 
 ## Introduction
     
-    The Application helps users to rate their favourite movies through API calls. Express is used with Node.js due to its fast, 
-    unopinionated, minimalist web framework. MongoDB used to store data of users and the movies due to its avaliability of large
-    range of Schema and ease to use. 
+  The Application helps users to rate their favourite movies through API calls. Express is used with Node.js due to its fast, 
+  unopinionated, minimalist web framework. MongoDB used to store data of users and the movies due to its avaliability of large
+  range of Schema and ease to use. 
     
 ## Technology
     1. Node.js
@@ -22,17 +22,25 @@ An API that allows its users to retrive movie list, rate a movie and view all mo
     3. MongoDB
     4. Mongoose
 ## API reference
-   A list of 50 movies data has been fetched from this api where **list_id = 10** and **page_no = 1, 2 ,3** 
-   (3 pages of data has been collected) https://api.themoviedb.org/4/list/{list_id}?page={page_no}&api_key=<<api_key>>
+   
+   A list of 50 movies data has been fetched from "**The Movie Database API**". 
+   This link is used to create the movies in the local database.
+            
+            https://api.themoviedb.org/4/list/{list_id}?page={page_no}&api_key=<<api_key>>
+    
+   with the following entries **list_id = 10** and **page_no = 1, 2 ,3** 
+   (3 pages of data has been collected) 
 
 ## Setup
-    Make sure that Node.js, Mongodb, robo3T, VS Code(any text editor) and Postman are installed in your local system. 
-    Open the terminal and type the following commands
-    1. npm install --save-dev nodemon
-    2. npm install
-    3. create a .env file in the root of the project
-    4. Register in https://developers.themoviedb.org/3/getting-started/introduction and get your own API_KEY
-    5. Paste
+   Make sure that Node.js, Mongodb, robo3T, VS Code(any text editor) and Postman are installed in your local system. 
+   Open the terminal and type the following commands
+   * npm install --save-dev nodemon
+   * npm install
+   * create a .env file in the root of the project
+   * Register in 
+   
+    https://developers.themoviedb.org/3/getting-started/introduction and get your own API_KEY
+   * Paste the following in your .env file
         API_KEY = <<Your API KEY>>
         ACCESS_TOKEN_SECRET = <<Enter a Secret of your choice>>
 
