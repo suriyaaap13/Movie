@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 async function APIDRAMA() {
-    const dummy = await User.find({});
+    // const dummy = await User.find({});
     const movieCheck = await Movie.find({title: "Ice Age: Continental Drift"});
     if(!movieCheck[0]){
         //////////////////// Make a request for a user with a given ID///////////

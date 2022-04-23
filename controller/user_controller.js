@@ -1,8 +1,13 @@
 // import the Validation Controller
 const validationController = require('./validation_controller');
+// import other npm library
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+// import user model
 const User = require('../model/user');
+
+
+// Register action to register a new user
 module.exports.register = async (req, res)=>{
     // Validate data before pushing it to the database
     const {error} = await validationController.registerValidation(req.body);
@@ -27,6 +32,8 @@ module.exports.register = async (req, res)=>{
         return res.status(400).json({message: "Error in creating user try again"});;
     } 
 }
+
+// Action to login a new user
 module.exports.login = async (req, res)=>{
     // Validate data before pushing it to the database
     const {error} = await validationController.loginValidation(req.body);

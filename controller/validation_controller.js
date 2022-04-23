@@ -1,7 +1,7 @@
 // Validation
 const Joi = require('joi');
 
-
+// validates the register entry
 module.exports.registerValidation = (data)=>{
     const schema = Joi.object({
         name: Joi.string()
@@ -18,7 +18,7 @@ module.exports.registerValidation = (data)=>{
     });
     return schema.validate(data);
 }
-
+// validates the login entry
 module.exports.loginValidation = (data)=>{
     const schema = Joi.object({
         email: Joi.string()
