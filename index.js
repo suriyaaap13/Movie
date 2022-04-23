@@ -19,12 +19,9 @@ app.use(bodyParser.json());
 
 async function APIDRAMA() {
     const dummy = await User.find({});
-    console.log(dummy);
     const movieCheck = await Movie.find({title: "Ice Age: Continental Drift"});
-    console.log(movieCheck);
     if(!movieCheck[0]){
         //////////////////// Make a request for a user with a given ID///////////
-        console.log("I am in here");
         const api = [
             `https://api.themoviedb.org/4/list/10?page=1&api_key=${process.env.API_KEY}`,
             `https://api.themoviedb.org/4/list/10?page=2&api_key=${process.env.API_KEY}`,

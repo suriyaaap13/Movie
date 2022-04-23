@@ -11,7 +11,7 @@ function authenticateToken(req, res, next){
             message: 'Forbidden Error',
             status: 403
         });}
-        console.log(user);
+        // console.log(user);
         req.user = user;
         next();
     });

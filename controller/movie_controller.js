@@ -14,8 +14,7 @@ module.exports.rateMovie = async (req, res)=>{
     const ratingsArray = movie.ratings;
     ratingsArray.forEach(async (element) => {
         if(user._id.valueOf()===element.by.valueOf()){
-            const docs = await Movie.findByIdAndUpdate(req.params.id, {$pull: {ratings: {_id: element._id}}});
-            console.log(docs);
+            await Movie.findByIdAndUpdate(req.params.id, {$pull: {ratings: {_id: element._id}}});
         }
     });
     
