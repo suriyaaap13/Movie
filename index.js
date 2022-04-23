@@ -6,7 +6,6 @@ const bodyParser = require('body-parser');
 const axios = require('axios');
 const User = require('./model/user');
 const Movie = require('./model/movie');
-const API = require('./model/fetchDone');
 
 const app = express();
 
@@ -21,10 +20,11 @@ app.use(bodyParser.json());
 async function APIDRAMA() {
     const dummy = await User.find({});
     console.log(dummy);
-    const docs = await API.find({});
-    console.log(docs);
-    if(!docs[0]){
+    const movieCheck = await Movie.find({title: "Ice Age: Continental Drift"});
+    console.log(movieCheck);
+    if(!movieCheck[0]){
         //////////////////// Make a request for a user with a given ID///////////
+        console.log("I am in here");
         const api = [
             `https://api.themoviedb.org/4/list/10?page=1&api_key=${process.env.API_KEY}`,
             `https://api.themoviedb.org/4/list/10?page=2&api_key=${process.env.API_KEY}`,
@@ -36,7 +36,7 @@ async function APIDRAMA() {
              response.data.results.forEach(async (element, index)=>{
                 try{
                 await Movie.create(element);
-                console.log("Data Fetched Successfully ", index);
+                // console.log("Data Fetched Successfully ", index);
                 }catch(err){
                 console.log('Error ', err);
                 }
@@ -47,10 +47,7 @@ async function APIDRAMA() {
             console.log(error);
             });
         });
-        const fetched = await API.create({
-            title: "APIFetched",
-            done: false
-        });
+        
     }
 }
 
