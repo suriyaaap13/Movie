@@ -47,13 +47,7 @@ async function APIDRAMA() {
         
     }
 }
-
 APIDRAMA();
-
-
-
-
-
 /////////////////////// Route Middleware ///////////////////////
 app.use('/', require('./routes'));
 
