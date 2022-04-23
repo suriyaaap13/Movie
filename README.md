@@ -38,7 +38,12 @@ An API that allows its users to rate a movie
 
 ## Functionality
  Register User
-   ![]("https://github.com/suriyaaap13/Movie/blob/master/Images/Register-1.png")
+    To register a new user send post request to http://localhost:3000/api/user/register in postman with name, email and password in the body.
+    The following images will help in better understanding
+   ![Send Request](https://user-images.githubusercontent.com/76957372/164882371-a9207c14-16ee-4b28-ba66-d7c772f1c437.png)
+   ![body of Request](https://user-images.githubusercontent.com/76957372/164882378-86f7b4ad-838c-4349-8811-57c968688618.png)
+   ![Result](https://user-images.githubusercontent.com/76957372/164882380-d6259d31-05d5-4bae-ab3b-bfe2d792e535.png)
+
     
 
     Login User
