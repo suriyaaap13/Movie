@@ -43,6 +43,7 @@ An API that allows its users to retrive movie list, rate a movie and view all mo
    * Paste the following in your .env file
         API_KEY = <<Your API KEY>>
         ACCESS_TOKEN_SECRET = <<Enter a Secret of your choice>>
+   * To run the project type **npm start** in the terminal
 
 ## Functionality
 
